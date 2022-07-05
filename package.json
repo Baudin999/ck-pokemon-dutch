@@ -2,7 +2,7 @@
   "name": "pokemon",
   "version": "1.0.0",
   "description": "",
-  "main": "initializePokemon.js",
+  "main": "pokemonHandlers.js",
   "scripts": {
     "run": "node ./server/server.js"
   },

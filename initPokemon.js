@@ -1,4 +1,8 @@
-let fs = require('fs');
+
+
+
+// load the pokemon from the api
+import fs from "fs";
 
 
 // save the pokemon data as a json file to the pokedeck directory
@@ -8,18 +12,27 @@ function savePokemon(pokemonName, data) {
 }
 
 
-// load the pokemon from the api
-async function loadPokemon(name) {
-    // check if the pokemon is already in the pokedeck directory
-    if (fs.existsSync(`./pokedeck/${name}/${name}.json`)) {
-        return JSON.parse(fs.readFileSync(`./pokedeck/${name}/${name}.json`));
-    }
+async function loadPokemonById(id) {
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+    const response = await fetch(url);
+    const data = await response.json();
 
-    else {
-        // pokemon does not exist in the pokedeck directory
-        return null;
+    if (data) {
+        const name = data.name;
+
+        console.log(`Saving pokemon: ${name}`);
+
+        // if directory doesn't exist, create it
+        if (!fs.existsSync(`./pokedeck/${name}`)) {
+            fs.mkdirSync(`./pokedeck/${name}`);
+        }
+
+        await loadPokemonSprites(name);
+        savePokemon(name, data);
+        return data;
     }
 }
+
 
 async function loadPokemonSprites(name) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon-form/${name}`);
@@ -43,52 +56,7 @@ async function loadPokemonSprites(name) {
     return null;
 }
 
-// get all the pokemon names from the pokedeck directory
-function getPokemonNames() {
-    let i = 0;
-    const pokemon = fs.readdirSync('./pokedeck').map(name => {
-        i++;
-        return {
-            name: name,
-            url: `https://pokeapi.co/api/v2/pokemon/${name}`,
-            sprite: `/pokedeck/${name}/front_default.png`
-        };
-    });
-    console.log(pokemon.length + " --- " + i);
-    return pokemon;
-}
 
-
-
-
-
-// load the pokemon from the api
-async function loadPokemonById(id) {
-    const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (data) {
-        const name = data.name;
-
-        console.log(`Saving pokemon: ${name}`);
-
-        // if directory doesn't exist, create it
-        if (!fs.existsSync(`./pokedeck/${name}`)) {
-            fs.mkdirSync(`./pokedeck/${name}`);
-        }
-
-        await loadPokemonSprites(name);
-        savePokemon(name, data);
-        return data;
-    }
-}
-
-
-module.exports = {
-    getPokemon: loadPokemon,
-    getPokemonNames: getPokemonNames,
-};
 
 async function downloadPokemon() {
     // delete pokedeck directory if it already exists
@@ -107,5 +75,5 @@ async function downloadPokemon() {
     }
     console.log('done downloading pokemon');
 }
-_ = downloadPokemon();
 
+downloadPokemon();

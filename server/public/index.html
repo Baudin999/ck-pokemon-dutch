@@ -3,17 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="pyro.css" />
 </head>
 <body>
     <select id="choose-your-pokemon">
         <option></option>
     </select>
-    <button id="btn-start">Start</button>
-    <button id="btn-next">Next</button>
+    <button id="btn-next" style="display: none;">Next</button>
 
     <input id="input" />
-    <button id="btn-check">Check</button>
+    <button id="btn-check" style="display: none">Check</button>
+
+    <div class="images">
+        <div class="left">
+            <img id="your-pokemon" />
+            <div id="your-pokemon-name"></div>
+            <div id="your-pokemon-HP"></div>
+        </div>
+
+        <div style='font-size: 45px;'>VS.</div>
+
+        <div class="right">
+            <img id="opponent-pokemon" />
+            <div id="opponent-pokemon-name"></div>
+            <div id="opponent-pokemon-HP"></div>
+        </div>
+    </div>
+
+    <div id="winning" class="">
+        <div class="before"></div>
+        <div class="after"></div>
+    </div>
 
     <div id="pokemon-body"></div>
 

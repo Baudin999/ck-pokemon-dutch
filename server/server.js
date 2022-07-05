@@ -1,6 +1,6 @@
 const express  = require('express');
 const app = express();
-const { getPokemon, getPokemonNames } = require('./../initializePokemon');
+const { getPokemon, getPokemonNames } = require('../pokemonHandlers');
 
 // add the pokedeck as a static folder
 app.use('/pokedeck', express.static('./pokedeck'));

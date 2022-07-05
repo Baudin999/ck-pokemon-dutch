@@ -2,33 +2,44 @@
 let currentWord;
 
 
-// initialize an array with the game's words
+// initialize an array with the game's dutch words
 var words = [
-    "abandon",
-    "ability",
-    "able",
-    "about",
-    "above"
+    "aardbei",
+    "aardbeien",
+    "boterbloem",
+    "banaan",
+    "behouden",
+    "bijt",
+    "auto",
+    "aandrijven",
+    "andersom",
+    "zouden",
+    "zweven",
+    "zwijgen",
+    "houden",
+    "hij houdt",
+    "ik hou van"
 ];
 
 // list of sentences which congratulate the user
 var congrats = [
-    "You are a master at this game!",
-    "You are a great player!",
-    "Well done!",
-    "You are doing great!",
-    "Keep it up!",
-    "This is awesome!",
-    "That is correct!",
-    "You are right!"
+    "Wat gaat het goed!",
+    "Super!",
+    "Ga zo door!",
+    "Je kunt het!",
+    "Niet verslappen!",
+    "Je bent er bijna!",
+    "Die was mooi!"
 ];
 
 
 // select a random word from the array of words and speak it aloud
 function speakWord(reuseWord) {
 
-    if (words.length === 0) {
-        readOutLoud('You have finished the game!');
+    if (words.length === 0 || opponentHP <= 0) {
+        readOutLoud('Je hebt het spel uitgespeeld!');
+        readOutLoud('Kies een nieuwe pokemon om het nog een keer te kunnen spelen!');
+        document.getElementById('winning').classList.add('pyro');
         return;
     };
 
@@ -67,6 +78,10 @@ document.getElementById('btn-check').onclick = function() {
             input.style.color = 'black';
             input.value = '';
 
+            // reduce your HP by 10
+            yourHP -= 10;
+            yourHPBox.innerText = yourHP;
+
             speakWord(true);
         }, 1000);
     }
@@ -77,6 +92,10 @@ document.getElementById('btn-check').onclick = function() {
         // random correct sentence
         const correctSentence = congrats[Math.floor(Math.random() * congrats.length)];
         readOutLoud(correctSentence);
+
+        // reduce opponent HP by 10
+        opponentHP -= 50;
+        opponentHPBox.innerText = opponentHP;
 
         setTimeout(function() {
             input.style.backgroundColor = 'white';

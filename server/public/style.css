@@ -3,7 +3,7 @@
 #input {
     position: fixed;
     left: 50%;
-    top: 50%;
+    bottom: 10%;
     transform: translate(-50%, -50%);
 
     width: 500px;
@@ -12,4 +12,21 @@
 
     padding: 10px;
 
+}
+
+.images {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.images left, .images right {
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.images img {
+    width: 300px;
+    height: auto;
 }

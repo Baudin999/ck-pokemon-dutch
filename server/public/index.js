@@ -1,35 +1,33 @@
 const synth = window.speechSynthesis;
-let voice, pokemonList;
+let voice,
+    pokemonList,
+    yourHP = 100,
+    opponentHP = 100,
+    yourHPBox = document.getElementById('your-pokemon-HP'),
+    opponentHPBox = document.getElementById('opponent-pokemon-HP');
+
+
 synth.onvoiceschanged = function() {
     let voices = synth.getVoices();
-    // for (let i = 0; i < voices.length; i++) {
-    //     if (voices[i].lang.startsWith('en')) {
-    //         console.log(voices[i]);
-    //     }
-    //
-    // }
-    voice = voices.find(voice => { return voice.name === 'Oliver'; });
+    // voices.forEach(function(voice) {
+    //     console.log(voice);
+    // });
+
+    voice = voices.find(voice => voice.name === 'Xander');
+    // voice = voices.find(voice => { return voice.name === 'Oliver'; });
 }
 
-
-// load pikachu from the api
 const init = async function() {
-    let pikachu = await fetch('/pokemon/pikachu');
-    let pikachuData = await pikachu.json();
-    document.getElementById('pokemon-body').innerText = pikachuData.name;
-
-    var img = document.createElement('img');
-    img.src = pikachuData.sprites.front_default;
-    document.getElementById('pokemon-body').appendChild(img);
-
-    readOutLoud(pikachuData.name);
+    // get random pokemon from the pokemonList
+    let pokemon = pokemonList[Math.floor(Math.random() * pokemonList.length)];
+    document.getElementById('opponent-pokemon').src = pokemon.sprite;
+    document.getElementById('opponent-pokemon-name').innerText = pokemon.name;
+    opponentHPBox.innerText = opponentHP;
 }
 
 const getPokemon = async function() {
     const pokemonReq = await fetch('/pokemon');
     pokemonList = await pokemonReq.json();
-
-    console.log(pokemonList.length);
 
     var select = document.getElementById('choose-your-pokemon');
     pokemonList.forEach(pokemon => {
@@ -62,14 +60,19 @@ function readOutLoud(text) {
 }
 
 
-document.getElementById('btn-start').onclick = function() {
-    init();
-}
 document.getElementById('choose-your-pokemon').onchange = function(e) {
+
+    document.getElementById('winning').classList.remove('pyro');
+    opponentHP = 100;
+
     let pokemon = pokemonList.find(p => p.name === e.target.value);
-    var img = document.createElement('img');
-    img.src = pokemon.sprite;
-    document.body.appendChild(img);
+    document.getElementById('your-pokemon').src = pokemon.sprite;
+    document.getElementById('your-pokemon-name').innerText = pokemon.name;
+    yourHPBox.innerText = yourHP;
+
+    init();
+
+    document.getElementById('btn-next').click();
 }
 
 
