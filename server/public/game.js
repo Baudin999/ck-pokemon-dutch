@@ -3,7 +3,7 @@ let currentWord;
 
 
 // initialize an array with the game's dutch words
-var words = [
+const words = [
     "aardbei",
     "aardbeien",
     "boterbloem",
@@ -17,8 +17,24 @@ var words = [
     "zweven",
     "zwijgen",
     "houden",
-    "hij houdt",
-    "ik hou van"
+    "avondeten",
+    "computer",
+    "tafel",
+    "rafelen",
+    "raven",
+    "kippenbout",
+    "tijdschrift",
+    "tijd",
+    "speeltuin",
+    "speelgoed",
+    "winkel",
+    "winkelwagen",
+    "bijzonder",
+    "brandweer",
+    "politie",
+    "ziekenhuis",
+    "ziekte",
+    "andersom"
 ];
 
 // list of sentences which congratulate the user
@@ -94,7 +110,7 @@ document.getElementById('btn-check').onclick = function() {
         readOutLoud(correctSentence);
 
         // reduce opponent HP by 10
-        opponentHP -= 50;
+        opponentHP -= 10;
         opponentHPBox.innerText = opponentHP;
 
         setTimeout(function() {

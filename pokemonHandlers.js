@@ -26,7 +26,6 @@ function getPokemonNames() {
             sprite: `/pokedeck/${name}/front_default.png`
         };
     });
-    console.log(pokemon.length + " --- " + i);
     return pokemon;
 }
 

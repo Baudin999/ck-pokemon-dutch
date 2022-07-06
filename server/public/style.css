@@ -30,3 +30,8 @@
     width: 300px;
     height: auto;
 }
+
+.images > div {
+    text-align: center;
+    font-size: 2rem;
+}
